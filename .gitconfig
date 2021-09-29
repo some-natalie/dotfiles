@@ -1,0 +1,36 @@
+[core]
+	excludesfile = /Users/nataliesomersall/.gitignore_global
+	eol = lf
+	safecrlf = true
+[user]
+	name = Natalie Somersall
+	email =
+	signingkey =
+[gpg "x509"]
+	program = smimesign
+[gpg]
+	format = x509
+[credential]
+	helper = osxkeychain
+[push]
+	default = simple
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[http]
+	sslVerify = true
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[color]
+	ui = auto
+[hub]
+	host = github.com
+	protocol = ssh
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
+[commit]
+	gpgsign = true
