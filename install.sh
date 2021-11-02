@@ -4,7 +4,7 @@
 
 # Clone the repo
 git config --global http.sslVerify "false"
-git clone https://github.com/some-natalie/dotfiles.git ~/.dotfiles
+git clone --recurse-submodules https://github.com/some-natalie/dotfiles.git ~/.dotfiles
 
 # Install .bashrc
 mv -f ~/.dotfiles/.bashrc ~/.bashrc
