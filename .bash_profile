@@ -126,7 +126,7 @@ alias gl="git lg"
 alias gm="git merge"
 alias gp="git pull --ff"
 alias gpol="git push origin live"
-alias gpom="git push origin master"
+alias gpom="git push origin main"
 alias gpos="git push origin stable"
 alias gpou="git push origin upstream"
 alias gs="git status"
@@ -200,7 +200,7 @@ function git-cloneall() {
     return
   fi
   current=$(git rev-parse --abbrev-ref HEAD)
-  git branch -a | sed -n "/\/HEAD /d; /\/master$/d; /remotes/p;" | xargs -L1 git checkout -t
+  git branch -a | sed -n "/\/HEAD /d; /\/main$/d; /remotes/p;" | xargs -L1 git checkout -t
   git checkout $current
 }
 
