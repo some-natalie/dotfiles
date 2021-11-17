@@ -4,8 +4,7 @@
 	safecrlf = true
 [user]
 	name = Natalie Somersall
-	email =
-	signingkey =
+	email = some-natalie@github.com
 [gpg "x509"]
 	program = smimesign
 [gpg]
@@ -32,5 +31,3 @@
 	rebase = false
 [init]
 	defaultBranch = main
-[commit]
-	gpgsign = true

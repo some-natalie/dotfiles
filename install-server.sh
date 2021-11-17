@@ -3,7 +3,6 @@
 # This script installs/updates my dotfiles.
 
 # Clone the repo
-git config --global http.sslVerify "false"
 git clone --recurse-submodules https://github.com/some-natalie/dotfiles.git ~/.dotfiles
 
 # Install .bashrc
