@@ -22,7 +22,6 @@ alias mkdir='mkdir -p'
 alias myip='curl http://ipecho.net/plain; echo'
 alias nocomment='grep -Ev '\''^(#|$)'\'''
 alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
-alias psu="ps uxU ${1}"
 alias pwgen='openssl rand -base64 12'
 alias sshgen='ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(hostname)-$(date -I)"'
 alias wget='wget -c'
