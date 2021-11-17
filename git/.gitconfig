@@ -20,8 +20,6 @@
 	required = true
 [http]
 	sslVerify = true
-[url "git@github.com:"]
-	insteadOf = https://github.com/
 [color]
 	ui = auto
 [hub]
