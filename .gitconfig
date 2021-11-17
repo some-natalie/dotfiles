@@ -1,5 +1,5 @@
 [core]
-	excludesfile = /Users/nataliesomersall/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	eol = lf
 	safecrlf = true
 [user]
