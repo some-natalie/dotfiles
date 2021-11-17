@@ -6,4 +6,3 @@ do
     echo "wait a minute for the $i time"
     sleep 60
 done
-
