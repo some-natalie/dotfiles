@@ -21,18 +21,10 @@ alias ls='ls -lhaF'
 alias mkdir='mkdir -p'
 alias myip='curl http://ipecho.net/plain; echo'
 alias nocomment='grep -Ev '\''^(#|$)'\'''
+alias pip3-update='pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs pip3 install -U'
 alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
 alias pwgen='openssl rand -base64 12'
 alias sshgen='ssh-keygen -t rsa -b 4096 -C "$(whoami)@$(hostname)-$(date -I)"'
 alias wget='wget -c'
 alias youtube='youtube-dl --newline'
 alias zz='sudo !!'
-
-
-# # # # # # # # # #
-# Aliases for git #
-# # # # # # # # # #
-
-alias gitgraph="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
-alias git-yolo='git commit -am "`curl -s http://whatthecommit.com/index.txt`"'
-alias git-friday-afternoon='git commit -a -m "obviously not a read-only friday"; git push --force'
