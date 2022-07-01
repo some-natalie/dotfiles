@@ -13,6 +13,7 @@
 	helper = osxkeychain
 [push]
 	default = simple
+	autoSetupRemote = true
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
