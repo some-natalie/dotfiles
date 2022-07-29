@@ -5,10 +5,15 @@
 [user]
 	name = Natalie Somersall
 	email = some-natalie@github.com
+	signingKey = /Users/some-natalie/.ssh/git_signing_ed25519
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = /Users/some-natalie/.config/git/allowed_signers
 [gpg "x509"]
 	program = smimesign
-[gpg]
-	format = x509
 [credential]
 	helper = osxkeychain
 [push]
