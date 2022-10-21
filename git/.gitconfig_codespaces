@@ -1,0 +1,31 @@
+[core]
+	excludesfile = ~/.gitignore_global
+	eol = lf
+	safecrlf = true
+[user]
+	name = Natalie Somersall
+	email = some-natalie@github.com
+[push]
+	default = simple
+	autoSetupRemote = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[http]
+	sslVerify = true
+[color]
+	ui = auto
+[hub]
+	host = github.com
+	protocol = ssh
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
+[alias]
+	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %Cblue%cn%Creset committed %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+	undo = reset HEAD~1 --mixed
+	yolo = commit -am "`curl -s http://whatthecommit.com/index.txt`"

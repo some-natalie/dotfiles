@@ -3,7 +3,7 @@
 setup-files() {
   echo "----- setup files -----"
   git clone --depth=1 https://github.com/some-natalie/dotfiles.git ~/.dotfiles
-  mv ~/.dotfiles/git/.gitconfig ~/.gitconfig
+  mv ~/.dotfiles/git/.gitconfig_codespaces ~/.gitconfig
   mv ~/.dotfiles/git/.gitignore_global ~/.gitignore_global
 }
 
