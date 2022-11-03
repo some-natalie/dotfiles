@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Sets up the gitignore files
 setup-files() {
   echo "----- setup files -----"
   git clone --depth=1 https://github.com/some-natalie/dotfiles.git ~/.dotfiles
@@ -7,6 +8,7 @@ setup-files() {
   mv ~/.dotfiles/git/.gitignore_global ~/.gitignore_global
 }
 
+# Set up bash-it and aliasing
 setup-bash() {
   echo "----- setup bash -----"
   git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
@@ -18,6 +20,7 @@ setup-bash() {
   bash-it enable alias curl docker git
 }
 
+# Setup vim
 setup-vim() {
   echo "----- setup vim -----"
   git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
