@@ -12,8 +12,8 @@ setup-bash() {
   git clone --depth=1 https://github.com/Bash-it/bash-it.git ~/.bash_it
   bash ~/.bash_it/install.sh -s
   sed -i 's/bobby/powerline-plain/g' ~/.bashrc
-  mv ~/.dotfiles/bash-it/aliases.bash ~/.bash_it/custom/aliases.bash
-  mv ~/.dotfiles/bash-it/functions.bash ~/.bash_it/custom/functions.bash
+  mv ~/.dotfiles/bash-it/aliases.bash ~/.bash_it/aliases/custom.aliases.bash
+  mv ~/.dotfiles/bash-it/functions.bash ~/.bash_it/lib/custom.bash
   bash-it update
   bash-it enable alias curl docker git
 }
