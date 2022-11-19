@@ -23,6 +23,7 @@ alias ls='ls -lhaF'
 alias mkdir='mkdir -p'
 alias myip='curl http://ipecho.net/plain; echo'
 alias nocomment='grep -Ev '\''^(#|$)'\'''
+alias okta="security find-generic-password -l device_trust '-w'"
 alias pip3-update="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs pip3 install -U"
 alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
 alias pwgen='openssl rand -base64 12'
