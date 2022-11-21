@@ -152,6 +152,11 @@ cat() {
     [[ -n $colored ]] && echo "$colored" || echo "$out"
 }
 
+# Force-remove all local branches that don't exist on the remote
+function git-cleanup {
+  git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D
+}
+
 # Because.
 fliptable(){ echo "（╯°□°）╯ ┻━┻"; }
 shrug(){ echo " ¯\_(ツ)_/¯ "; }

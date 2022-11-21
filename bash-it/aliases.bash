@@ -17,7 +17,6 @@ alias dl='curl -OJL'
 alias du='du -chd 1'
 alias exif-strip='exiftool -all= *.jpg'
 alias free='free -h'
-alias git-cleanup="git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D"
 alias hg='history | grep'
 alias ls='ls -lhaF'
 alias mkdir='mkdir -p'
