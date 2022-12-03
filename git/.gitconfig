@@ -37,6 +37,7 @@
 	defaultBranch = main
 [alias]
 	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+	comet = commit -am "try this"
 	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %Cblue%cn%Creset committed %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 	undo = reset HEAD~1 --mixed
 	yolo = commit -am "`curl -s http://whatthecommit.com/index.txt`"
