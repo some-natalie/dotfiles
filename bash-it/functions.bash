@@ -160,3 +160,37 @@ function git-cleanup {
 # Because.
 fliptable(){ echo "（╯°□°）╯ ┻━┻"; }
 shrug(){ echo " ¯\_(ツ)_/¯ "; }
+
+# Add Mac updates
+function mac-updates {
+  # Homebrew
+  echo "Updating Homebrew ..."
+  brew update
+  brew upgrade
+  brew cleanup
+  brew cask cleanup
+
+  # Python
+  echo "Updating Python modules ..."
+  pip3-update
+
+  # Vim configs
+  echo "Updating Vim configs ..."
+  cd .vim_runtime && python3 update_plugins.py && cd ..
+
+  # tl;dr pages
+  echo "Updating tl;dr pages ..."
+  tldr --update
+
+  # GH CLI extensions
+  echo "Updating GitHub CLI extensions ..."
+  gh extension upgrade --all
+
+  # Helm
+  echo "Updating Helm repos ..."
+  helm repo update
+
+  # Azure CLI
+  echo "Updating Azure CLI ..."
+  az upgrade
+}
