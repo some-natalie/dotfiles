@@ -168,11 +168,10 @@ function mac-updates {
   brew update
   brew upgrade
   brew cleanup
-  brew cask cleanup
 
   # Python
   echo "Updating Python modules ..."
-  pip3-update
+  pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs pip3 install -U
 
   # Vim configs
   echo "Updating Vim configs ..."
