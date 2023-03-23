@@ -33,3 +33,8 @@ alias sshgen='ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)-$(date -I)"'
 alias wget='wget -c'
 alias youtube='youtube-dl --newline'
 alias zz='sudo !!'
+
+# Aliases for GitHub Copilot CLI
+alias '??'='github-copilot-cli what-the-shell'
+alias 'git?'='github-copilot-cli git-assist'
+alias 'gh?'='github-copilot-cli gh-assist'
