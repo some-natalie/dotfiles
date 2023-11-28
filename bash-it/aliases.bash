@@ -35,6 +35,5 @@ alias youtube='youtube-dl --newline'
 alias zz='sudo !!'
 
 # Aliases for GitHub Copilot CLI
-alias '??'='github-copilot-cli what-the-shell'
-alias 'git?'='github-copilot-cli git-assist'
-alias 'gh?'='github-copilot-cli gh-assist'
+alias 'gh?'='gh copilot explain'
+alias 'ghc'='gh copilot suggest'

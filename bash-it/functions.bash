@@ -192,10 +192,6 @@ function mac-updates {
   # Azure CLI
   echo "Updating Azure CLI ..."
   az upgrade
-
-  # Copilot CLI
-  echo "Updating GitHub Copilot CLI ..."
-  npm update -g @githubnext/github-copilot-cli
 }
 
 # Retry a command up to a specific numer of times until it exits successfully,
