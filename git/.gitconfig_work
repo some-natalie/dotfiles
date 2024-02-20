@@ -1,0 +1,57 @@
+[core]
+	excludesfile = ~/.gitignore_global
+	eol = lf
+	safecrlf = true
+[user]
+	name = Natalie Somersall
+    email = natalie.somersall@chainguard.dev
+    signingkey = /Users/natalie/.ssh/github-signing.pub
+[push]
+	default = simple
+	autoSetupRemote = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[http]
+	sslVerify = true
+[color]
+	ui = auto
+[hub]
+	host = github.com
+	protocol = ssh
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
+[alias]
+	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+	comet = commit -ams "try this"
+	cs = commit -s
+	graph = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %Cblue%cn%Creset committed %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+	nah = "!f(){ git reset --hard; git clean -df; if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then git rebase --abort; fi; }; f"
+	undo = reset HEAD~1 --mixed
+	yolo = commit -ams "`curl -s http://whatthecommit.com/index.txt`"
+	build = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"build(${scope}): ${@}\"; else git commit -m \"build: ${@}\"; fi }; a"
+	chore = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"chore(${scope}): ${@}\"; else git commit -m \"chore: ${@}\"; fi }; a"
+	ci = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"ci(${scope}): ${@}\"; else git commit -m \"ci: ${@}\"; fi }; a"
+	docs = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"docs(${scope}): ${@}\"; else git commit -m \"docs: ${@}\"; fi }; a"
+	feat = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"feat(${scope}): ${@}\"; else git commit -m \"feat: ${@}\"; fi }; a"
+	fix = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"fix(${scope}): ${@}\"; else git commit -m \"fix: ${@}\"; fi }; a"
+	perf = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"perf(${scope}): ${@}\"; else git commit -m \"perf: ${@}\"; fi }; a"
+	refactor = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"refactor(${scope}): ${@}\"; else git commit -m \"refactor: ${@}\"; fi }; a"
+	rev = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"revert(${scope}): ${@}\"; else git commit -m \"revert: ${@}\"; fi }; a"
+	style = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"style(${scope}): ${@}\"; else git commit -m \"style: ${@}\"; fi }; a"
+	test = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"test(${scope}): ${@}\"; else git commit -m \"test: ${@}\"; fi }; a"
+	wip = "!a() { if [ \"$1\" = \"-s\" ] || [ \"$1\" = \"--scope\" ]; then local scope=\"$2\"; shift 2; git commit -m \"wip(${scope}): ${@}\"; else git commit -m \"wip: ${@}\"; fi }; a"
+[gpg]
+	format = x509
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+[gpg "x509"]
+	program = gitsign
+[gitsign]
+	connectorID = https://accounts.google.com

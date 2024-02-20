@@ -1,0 +1,304 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="muse"
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in $ZSH/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Uncomment one of the following lines to change the auto-update behavior
+# zstyle ':omz:update' mode disabled  # disable automatic updates
+# zstyle ':omz:update' mode auto      # update automatically without asking
+# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
+
+# Uncomment the following line to change how often to auto-update (in days).
+# zstyle ':omz:update' frequency 13
+
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS="true"
+
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
+
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# You can also set it to another string to have that shown instead of the default red dots.
+# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
+# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(
+    git
+    git-commit
+    gh
+    history
+    kubectl
+    nmap
+)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+# General
+alias c='clear'
+alias csrgen='openssl req -out CSR.csr -new -newkey rsa:4096 -nodes -keyout privatekey.key'
+alias df='df -h -x tmpfs -x devtmpfs'
+alias dft='df -Tha --total'
+alias diskspace='du -S | sort -n -r | more'
+alias dl='curl -OJL'
+alias du='du -chd 1'
+alias exif-strip='exiftool -all= *.jpg'
+alias free='free -h'
+alias ls='ls -lhaF'
+alias mkdir='mkdir -p'
+alias myip='curl http://ipecho.net/plain; echo'
+alias nocomment='grep -Ev '\''^(#|$)'\'''
+alias pip3-update="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs pip3 install -U"
+alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
+alias pwgen='openssl rand -base64 12'
+alias sshgen='ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)-$(date -I)"'
+alias wget='wget -c'
+alias youtube='youtube-dl --newline'
+alias zz='sudo !!'
+
+# Force-remove all local branches that don't exist on the remote
+function git-cleanup {
+  git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D
+}
+
+# Because.
+fliptable(){ echo "（╯°□°）╯ ┻━┻"; }
+shrug(){ echo " ¯\_(ツ)_/¯ "; }
+
+# Aliases for GitHub Copilot CLI
+alias 'gh?'='gh copilot explain'
+alias 'ghc'='gh copilot suggest'
+
+# Print a remote server's SSL certificate to the terminal
+function sslcert() {
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: sslcert [FQDN]"
+    echo "Prints SSL certificate of a remote server to the terminal."
+    return
+  fi
+  echo | openssl s_client -showcerts -servername "$@" -connect "$*":443 2>/dev/null | openssl x509 -inform pem -noout -text
+}
+
+# Extract a file
+function extract() {
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: extract [filename]"
+    echo "Extracts specified archive."
+    return
+  fi
+  if [ -f "$1" ] ; then
+    case "$1" in
+      *.tar.bz2) tar xjf "$1" ;;
+      *.tar.gz) tar xzf "$1" ;;
+      *.tar.Z) tar xzf "$1" ;;
+      *.bz2) bunzip2 "$1" ;;
+      *.rar) unrar x "$1" ;;
+      *.gz) gunzip "$1" ;;
+      *.jar) unzip "$1" ;;
+      *.tar) tar xf "$1" ;;
+      *.tbz2) tar xjf "$1" ;;
+      *.tgz) tar xzf "$1" ;;
+      *.zip) unzip "$1" ;;
+      *.Z) uncompress "$1" ;;
+      *) echo "'$1' cannot be extracted." ;;
+    esac
+    else
+      echo "'$1' is not a file."
+  fi
+}
+
+# What processes are listening on what ports?
+function listening {
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: listening [t|tcp|u|udp] [ps regex]"
+    return
+  fi
+  DISP="both"
+  NSOPTS="tu"
+  if [ "${1}" = "t" -o "${1}" = "tcp" ]; then
+    DISP="tcp"
+    NSOPTS="t"
+    shift
+  elif [ "${1}" = "u" -o "${1}" = "udp" ]; then
+    DISP="udp"
+    NSOPTS="u"
+    shift
+  fi
+  FILTER="${*}"
+  PORTS_PIDS=$(netstat -"${NSOPTS}"lnp | tail -n +3 | tr -s ' ' | sed -n 's/\(tcp\|udp\) [0-9]* [0-9]* \(::\|0\.0\.0\.0\|127\.[0-9]*\.[0-9]*\.[0-9]*\):\([0-9]*\) .* \(-\|\([0-9-]*\)\/.*\)/\3 \1 \5 \2/p' | sed 's/\(::\|0\.0\.0\.0\)/EXTERNAL/' | sed 's/127\.[0-9]*\.[0-9]*\.[0-9]*/LOCALHOST/' | sort -n | tr ' ' ':' | sed 's/::/:-:/' | sed 's/:$//' | uniq)
+  PS=$(ps -eo pid,args)
+  echo -e '   Port - Protocol - Interface - Program\n-----------------------------------------------'
+  for PORT_PID in ${PORTS_PIDS}; do
+    PORT=$(echo "${PORT_PID}" | cut -d':' -f1)
+    PROTOCOL=$(echo "${PORT_PID}" | cut -d':' -f2)
+    PID=$(echo "${PORT_PID}" | cut -d':' -f3)
+    INTERFACE=$(echo "${PORT_PID}" | cut -d':' -f4)
+    if [ "${PROTOCOL}" != "${DISP}" -a "${DISP}" != "both" ]; then
+      continue
+    fi
+    if [ "${PID}" = "-" ]; then
+      if [ "${FILTER}" != "" ]; then
+        continue
+      fi
+      printf "%7s - %8s - %9s - -\n" "${PORT}" "${PROTOCOL}" "${INTERFACE}"
+    else
+      PROG=$(echo "${PS}" | grep "^ *${PID}" | grep -o '[0-9] .*' | cut -d' ' -f2-)
+      if [ "${FILTER}" != "" ]; then
+        echo "${PROG}" | grep -q "${FILTER}"
+        if [ $? -ne 0 ]; then
+          continue
+        fi
+      fi
+      printf "%7s - %8s - %9s - %s\n" "${PORT}" "${PROTOCOL}" "${INTERFACE}" "${PROG}"
+    fi
+  done
+}
+
+# What processes have open files?
+function openfiles {
+  if [ "${1}" = "-h" ]; then
+    echo -e "Usage: openfiles [r|w|m|R|W] regex\n    -r    opened for reading or read/write\n    -w    opened for writing or read/write\n    -m    accessed from memory (includes running command)\n    -R    opened for reading only\n    -W    opened for writing only"
+    return
+  fi
+  if [ "$#" = "0" ]; then
+    echo "Process signature/regex required."
+    return
+  fi
+  MODE="(w|u)"
+  ACTION="for writing"
+  if [ "${1}" = "r" ]; then
+    MODE="(r|u)"
+    ACTION="for reading"
+    shift
+  elif [ "${1}" = "R" ]; then
+    MODE="r"
+    ACTION="for reading (only)"
+    shift
+  elif [ "${1}" = "W" ]; then
+    MODE="w"
+    ACTION="for writing (only)"
+    shift
+  elif [ "${1}" = "m" ]; then
+    MODE="(txt|mem)"
+    ACTION="in memory"
+    shift
+  elif [ "${1}" = "w" ]; then
+    shift
+  fi
+  if [ "${MODE}" != "(txt|mem)" ]; then
+    MODE="[0-9]+${MODE}"
+  fi
+  PIDS=$(pgrep -d "," -f "${@}")
+  if [ "${PIDS}" = "" ]; then
+    echo "No processes found matching '${@}'."
+    return
+  fi
+  OPENFILES=$(lsof -PXn -p "${PIDS}" | egrep "${MODE}[A-Za-z]* +REG" | awk '{print $9}' | egrep -v "^\[" | sort | uniq);
+  if [ "${OPENFILES}" = "" ]; then
+    echo "No files opened ${ACTION}."
+  else
+    echo "Files opened ${ACTION}:"
+    ls -ahl "$OPENFILES"
+  fi
+}
+
+# Add Mac updates
+function mac-updates {
+  # Homebrew
+  echo "Updating Homebrew ..."
+  brew update
+  brew upgrade
+  brew cleanup
+
+  # Vim configs
+  echo "Updating Vim configs ..."
+  cd .vim_runtime && python3 update_plugins.py && cd ..
+
+  # tl;dr pages
+  echo "Updating tl;dr pages ..."
+  tldr --update
+
+  # GH CLI extensions
+  echo "Updating GitHub CLI extensions ..."
+  gh extension upgrade --all
+
+  # Helm
+  echo "Updating Helm repos ..."
+  helm repo update
+
+  # Oh my zsh
+  echo "Updating Oh My Zsh ..."
+  omz update
+}

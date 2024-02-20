@@ -4,7 +4,7 @@
 	safecrlf = true
 [user]
 	name = Natalie Somersall
-	email = some-natalie@github.com
+	email = natalie.somersall@gmail.com
 [push]
 	default = simple
 	autoSetupRemote = true

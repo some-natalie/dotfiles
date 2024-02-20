@@ -4,14 +4,14 @@
 	safecrlf = true
 [user]
 	name = Natalie Somersall
-	email = some-natalie@github.com
-	signingKey = /Users/some-natalie/.ssh/git_signing_ed25519
+	email = natalie.somersall@gmail.com
+	signingKey = /home/natalie/.ssh/git_signing_ed25519
 [gpg]
 	format = ssh
 [commit]
 	gpgsign = true
 [gpg "ssh"]
-	allowedSignersFile = /Users/some-natalie/.config/git/allowed_signers
+	allowedSignersFile = /home/natalie/.config/git/allowed_signers
 [gpg "x509"]
 	program = smimesign
 [credential]
@@ -42,3 +42,4 @@
 	nah = "!f(){ git reset --hard; git clean -df; if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then git rebase --abort; fi; }; f"
 	undo = reset HEAD~1 --mixed
 	yolo = commit -am "`curl -s http://whatthecommit.com/index.txt`"
+	cs = commit -s
