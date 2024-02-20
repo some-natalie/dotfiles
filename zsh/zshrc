@@ -133,6 +133,28 @@ function git-cleanup {
   git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D
 }
 
+# Config git repo for work
+setup_gitsign () {
+  git config --local user.name "Natalie Somersall"
+  git config --local user.email "natalie.somersall@chainguard.dev"
+	git config --local commit.gpgsign true
+	git config --local tag.gpgsign true
+	git config --local gpg.x509.program gitsign
+	git config --local gpg.format x509
+	git config --local gitsign.connectorID https://accounts.google.com
+}
+
+# Config git repo for personal
+setup_gitssh () {
+  git config --local user.name "Natalie Somersall"
+  git config --local user.email "natalie.somersall@gmail.com"
+  git config --local user.signingKey = /Users/natalie/.ssh/github-signing.pub
+  git config --local commit.gpgsign true
+  git config --local tag.gpgsign true
+  git config --local gpg.x509.program ssh
+  git config --local gpg.format ssh
+}
+
 # Because.
 fliptable(){ echo "（╯°□°）╯ ┻━┻"; }
 shrug(){ echo " ¯\_(ツ)_/¯ "; }
