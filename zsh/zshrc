@@ -323,4 +323,8 @@ function mac-updates {
   # Oh my zsh
   echo "Updating Oh My Zsh ..."
   omz update
+
+  # Chainguard CLI
+  echo "Updating Chainguard CLI ..."
+  chainctl update
 }
