@@ -136,7 +136,7 @@ function git-cleanup {
 # Config git repo for work
 setup_gitsign () {
   git config --local user.name "Natalie Somersall"
-  git config --local user.email "natalie.somersall@chainguard.dev"
+  git config --local user.email "some-natalie@chainguard.dev"
 	git config --local commit.gpgsign true
 	git config --local tag.gpgsign true
 	git config --local gpg.x509.program gitsign
