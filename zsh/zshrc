@@ -323,5 +323,18 @@ function mac-updates {
   # Oh my zsh
   echo "Updating Oh My Zsh ..."
   omz update
+}
 
+# List Helm charts
+function helm-images {
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: helm-images [chart]"
+    echo "Lists images used in Helm chart."
+    return
+  fi
+  if [ "${1}" = "" ]; then
+    echo "Chart name required."
+    return
+  fi
+  helm template "${1}" | grep -oE 'image: .+' | cut -d' ' -f2
 }
