@@ -325,8 +325,8 @@ function mac-updates {
   omz update
 }
 
-# List Helm charts
-function helm-images {
+# List images in a Helm chart
+function helm-ls-images {
   if [ "${1}" = "-h" ]; then
     echo "Usage: helm-images [chart]"
     echo "Lists images used in Helm chart."
