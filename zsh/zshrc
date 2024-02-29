@@ -336,5 +336,5 @@ function helm-ls-images {
     echo "Chart name required."
     return
   fi
-  helm template "${1}" | grep -oE 'image: .+' | cut -d' ' -f2
+  helm template "${1}" | grep -oE 'image: .+' | cut -d' ' -f2 | sort | uniq
 }
