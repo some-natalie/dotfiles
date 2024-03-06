@@ -75,6 +75,7 @@ plugins=(
     git-commit
     gh
     history
+    jq
     kubectl
     nmap
 )
