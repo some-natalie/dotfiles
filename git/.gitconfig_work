@@ -56,4 +56,4 @@
 [gitsign]
 	connectorID = https://accounts.google.com
 [oh-my-zsh]
-	git-commit-alias = fd01fd66ce27c669e5ffaea94460a37423d1e134
+	git-commit-alias = 1cc41576d4d2ffe2f63bb893a40ef864dc7f2c98

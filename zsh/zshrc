@@ -339,3 +339,18 @@ function helm-ls-images {
   fi
   helm template "${1}" | grep -oE 'image: .+' | cut -d' ' -f2 | sort | uniq
 }
+
+# Get the Chainguard ID of a given domain
+function chainctl-id {
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: chainctl-id [domain]"
+    echo "Get the Chainguard group ID of a given domain."
+    return
+  fi
+  if [ "${1}" = "" ]; then
+    echo "Domain name required."
+    return
+  fi
+  echo "Getting group ID for domain ${1} ..."
+  chainctl iam organizations list -o json | jq '.items[] | select(.name == '\"${1}\"') | .id'
+}
