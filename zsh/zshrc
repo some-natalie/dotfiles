@@ -354,3 +354,43 @@ function chainctl-id {
   echo "Getting group ID for domain ${1} ..."
   chainctl iam organizations list -o json | jq '.items[] | select(.name == '\"${1}\"') | .id'
 }
+
+# Check website with htmlproofer
+function check-website {
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: check-website [path]"
+    echo "Check website with htmlproofer."
+    return
+  fi
+  rm -rf Gemfile.lock _site .jekyll-cache && \
+  docker run -it --rm \
+    --volume="$PWD:/work" \
+    ghcr.io/some-natalie/jekyll-in-a-can:latest /bin/sh -c \
+    "bundle exec jekyll b -d '_site' && \
+      bundle exec htmlproofer _site --disable-external \
+      --check-html \
+      --enforce_https false"
+}
+
+function run-website {
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: run-website"
+    echo "Build and run the website in current working directory with Jekyll."
+    echo "Website will be available at http://localhost:4000."
+    return
+  fi
+  rm -rf Gemfile.lock _site .jekyll-cache && \
+  docker run -it --rm \
+    --volume="$PWD:/work" \
+    -p 4000:4000 \
+    ghcr.io/some-natalie/jekyll-in-a-can:latest
+}
+
+# Nuke it from orbit w/ git
+function git-nah () {
+    git reset --hard
+    git clean -df
+    if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then
+        git rebase --abort
+    fi
+}
