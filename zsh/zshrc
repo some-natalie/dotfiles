@@ -379,7 +379,10 @@ function run-website {
     echo "Website will be available at http://localhost:4000."
     return
   fi
-  rm -rf Gemfile.lock _site .jekyll-cache && \
+  if [ "${1}" = "-c" ]; then
+    echo "Cleaning up first ..."
+    rm -rf Gemfile.lock _site .jekyll-cache
+  fi
   docker run -it --rm \
     --volume="$PWD:/work" \
     -p 4000:4000 \
@@ -388,9 +391,25 @@ function run-website {
 
 # Nuke it from orbit w/ git
 function git-nah () {
-    git reset --hard
-    git clean -df
-    if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then
-        git rebase --abort
-    fi
+  git reset --hard
+  git clean -df
+  if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then
+    git rebase --abort
+  fi
+}
+
+# Grype summation
+function grype-summary () {
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: grype-summary [path]"
+    echo "Summarize vulnerabilities found by Grype."
+    return
+  fi
+  if [ "${1}" = "" ]; then
+    echo "Path or image name required."
+    return
+  fi
+  grype ${1} -o json --file grype.json -q
+  cat grype.json | jq  '.matches[].vulnerability.severity' | sort | uniq -c
+  rm grype.json
 }
