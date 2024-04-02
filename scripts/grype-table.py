@@ -12,7 +12,7 @@ registry.path/image1:tag
 image2:tag
 
 Run the script:
-$ python3 grype-summation.py images.txt
+$ python3 grype-table.py images.txt
 
 Output:
 - A table of results from the grype tool to the console
