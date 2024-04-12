@@ -324,6 +324,10 @@ function mac-updates {
   # Oh my zsh
   echo "Updating Oh My Zsh ..."
   omz update
+
+  # Nmap scripts - https://nmap.org
+  echo "Updating Nmap scripts ..."
+  nmap --script-updatedb
 }
 
 # List images in a Helm chart
@@ -412,4 +416,21 @@ function grype-summary () {
   grype ${1} -o json --file grype.json -q
   cat grype.json | jq  '.matches[].vulnerability.severity' | sort | uniq -c
   rm grype.json
+}
+
+function k-ls-images {
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: k-ls-images"
+    echo "List all images running in a cluster, using the current context."
+    return
+  fi
+  if [ "${1}" = "-c" ]; then
+    echo "Returning count of pods running each image as well."
+    echo " ... any `uniq` arguments work here ... "
+  fi
+  kubectl get pods --all-namespaces \
+    -o jsonpath="{.items[*].spec['initContainers', 'containers'][*].image}" |\
+  tr -s '[[:space:]]' '\n' |\
+  sort |\
+  uniq ${1}
 }
