@@ -434,3 +434,16 @@ function k-ls-images {
   sort |\
   uniq ${1}
 }
+
+function docker-size {
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: docker-size [image]"
+    echo "Inspect the size of a Docker image and return it in human-readable format."
+    return
+  fi
+  if [ "${1}" = "" ]; then
+    echo "Image name required."
+    return
+  fi
+  docker inspect -f "{{ .Size }}" ${1} | numfmt --to=si
+}
