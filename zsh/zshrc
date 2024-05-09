@@ -447,3 +447,36 @@ function docker-size {
   fi
   docker inspect -f "{{ .Size }}" ${1} | numfmt --to=si
 }
+
+function cgr-find {
+    if [ "${1}" = "-h" ]; then
+        echo "Usage: chainguard-search [image]"
+        echo "Search for an image by name with fzf."
+        return
+    fi
+    if [ "${1}" = "" ]; then
+        echo "Image name required."
+        return
+    fi
+    local privateorg="chainguard-private" # edit to your private registry
+    local publicorg="720909c9f5279097d847ad02a2f24ba8f59de36a"
+    # private images
+    echo "---- private images ----"
+    chainctl img repos list --parent $privateorg -o json | jq -r '.items[].name' | fzf --filter="${1}"
+    # public
+    echo "---- public images ----"
+    chainctl img repos list --parent $publicorg -o json | jq -r '.items[].name' | fzf --filter="${1}"
+}
+
+function img-tags {
+    if [ "${1}" = "-h" ]; then
+        echo "Usage: imgtags cgr.dev/reponame/imagename]"
+        echo "List tags for an OCI-compliant image, omitting digests, using crane."
+        return
+    fi
+    if [ "${1}" = "" ]; then
+        echo "Image name required."
+        return
+    fi
+    crane ls ${1} --omit-digest-tags
+}
