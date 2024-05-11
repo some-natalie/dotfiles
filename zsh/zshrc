@@ -470,7 +470,7 @@ function cgr-find {
 
 function img-tags {
     if [ "${1}" = "-h" ]; then
-        echo "Usage: imgtags cgr.dev/reponame/imagename]"
+        echo "Usage: img-tags registry.url/reponame/imagename"
         echo "List tags for an OCI-compliant image, omitting digests, using crane."
         return
     fi
