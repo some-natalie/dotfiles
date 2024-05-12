@@ -371,9 +371,9 @@ function check-website {
     --volume="$PWD:/work" \
     ghcr.io/some-natalie/jekyll-in-a-can:latest /bin/sh -c \
     "bundle exec jekyll b -d '_site' && \
-      bundle exec htmlproofer _site --disable-external \
-      --check-html \
-      --enforce_https false"
+      bundle exec htmlproofer _site \
+      --disable-external \
+      --no-enforce_https"
 }
 
 function run-website {
@@ -478,5 +478,5 @@ function img-tags {
         echo "Image name required."
         return
     fi
-    crane ls ${1} --omit-digest-tags
+    crane ls cgr.dev/chainguard-private/${1} --omit-digest-tags
 }
