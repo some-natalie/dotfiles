@@ -493,3 +493,13 @@ function img-tags {
     fi
     crane ls cgr.dev/chainguard-private/${1} --omit-digest-tags
 }
+
+function docker-cleanup {
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: docker-cleanup"
+    echo "Remove all stopped containers and dangling images, build cache, volumes, and more."
+    return
+  fi
+  docker system prune -af
+  docker volume prune -af
+}
