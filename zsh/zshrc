@@ -82,6 +82,9 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+# add go binary path
+path+=('/Users/natalie/go/bin')
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -414,7 +417,16 @@ function grype-summary () {
     return
   fi
   grype ${1} -o json --file grype.json -q
-  cat grype.json | jq  '.matches[].vulnerability.severity' | sort | uniq -c
+  echo "Total = $(cat grype.json | jq  '.matches[].vulnerability.severity' | uniq -c | awk '{sum += $1} END {print sum}')"
+  echo ""
+  echo "| Count | Severity |"
+  echo "|-------|----------|"
+  echo "| $(cat grype.json | jq  '.matches[].vulnerability.severity' | grep -c 'Critical') | critical |"
+  echo "| $(cat grype.json | jq  '.matches[].vulnerability.severity' | grep -c 'High') | high |"
+  echo "| $(cat grype.json | jq  '.matches[].vulnerability.severity' | grep -c 'Medium') | medium |"
+  echo "| $(cat grype.json | jq  '.matches[].vulnerability.severity' | grep -c 'Low') | low |"
+  echo "| $(cat grype.json | jq  '.matches[].vulnerability.severity' | grep -c 'Negligible') | negligible |"
+  echo "| $(cat grype.json | jq  '.matches[].vulnerability.severity' | grep -c 'Unknown') | unknown |"
   rm grype.json
 }
 
@@ -445,6 +457,7 @@ function docker-size {
     echo "Image name required."
     return
   fi
+  docker pull ${1} > /dev/null
   docker inspect -f "{{ .Size }}" ${1} | numfmt --to=si
 }
 
