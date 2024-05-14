@@ -112,6 +112,7 @@ path+=('/Users/natalie/go/bin')
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 # General
 alias c='clear'
+alias cgf='cgr-find'
 alias csrgen='openssl req -out CSR.csr -new -newkey rsa:4096 -nodes -keyout privatekey.key'
 alias df='df -h -x tmpfs -x devtmpfs'
 alias dft='df -Tha --total'
@@ -331,6 +332,11 @@ function mac-updates {
   # Nmap scripts - https://nmap.org
   echo "Updating Nmap scripts ..."
   nmap --script-updatedb
+
+  # Update go modules
+  echo "Updating go modules ..."
+  go install github.com/chainguard-dev/bincapz@latest
+  GOPRIVATE=github.com/chainguard-dev/nami go install github.com/chainguard-dev/nami@latest
 }
 
 # List images in a Helm chart
@@ -475,10 +481,10 @@ function cgr-find {
     local publicorg="720909c9f5279097d847ad02a2f24ba8f59de36a"
     # private images
     echo "---- private images ----"
-    chainctl img repos list --parent $privateorg -o json | jq -r '.items[].name' | fzf --filter="${1}"
+    chainctl img repos list --parent $privateorg -o json | jq -r '.items[].name' | fzf --filter="${1}" | sort
     # public
     echo "---- public images ----"
-    chainctl img repos list --parent $publicorg -o json | jq -r '.items[].name' | fzf --filter="${1}"
+    chainctl img repos list --parent $publicorg -o json | jq -r '.items[].name' | fzf --filter="${1}" | sort
 }
 
 function img-tags {
