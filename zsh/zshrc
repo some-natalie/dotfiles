@@ -503,3 +503,37 @@ function docker-cleanup {
   docker system prune -af
   docker volume prune -af
 }
+
+function apk-find {
+  if [ "${1}" = "" ]; then
+    echo "hint ... use -h for help"
+    return
+  fi
+  while getopts "hc:f:w:a:" opt; do
+    case ${opt} in
+      h)
+        echo "Usage: apk-find [options] [package]"
+        echo "Search for an Alpine/Wolfi/Chainguard package by name within a container."
+        echo "Options:"
+        echo "  -c  Search for packages in the Chainguard-Base repos."
+        echo "  -f  Search for packages in the Chainguard-Base-FIPS repos."
+        echo "  -w  Search for packages in the Wolfi repos."
+        echo "  -a  Search for packages in the Alpine repos."
+        echo "  -h  Display this help message."
+        return 0 ;;
+      c)
+        image=cgr.dev/chainguard-private/chainguard-base:latest ;;
+      f)
+        image=cgr.dev/chainguard-private/chainguard-base-fips:latest ;;
+      w)
+        image=cgr.dev/chainguard/wolfi-base:latest ;;
+      a)
+        image=alpine:latest ;;
+      \?)
+        echo "Invalid option: $OPTARG" 1>&2
+        echo "hint ... use -h for help"
+        return 1 ;;
+    esac
+  done
+  docker run -it --rm $image /bin/sh -c "apk update && apk search $2"
+}
