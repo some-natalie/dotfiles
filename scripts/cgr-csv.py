@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-This script will output a CSV file of all available Chainguard images.
+This script will output a CSV file of all available Chainguard images in a registry.
 
 The CSV file will contain the following columns:
 - Image Name
