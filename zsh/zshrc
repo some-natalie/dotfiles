@@ -125,7 +125,7 @@ alias ls='ls -lhaF'
 alias mkdir='mkdir -p'
 alias myip='curl http://ipecho.net/plain; echo'
 alias nocomment='grep -Ev '\''^(#|$)'\'''
-alias pip3-update="pip3 freeze --local | grep -v '^\-e' | cut -d = -f 1 | xargs pip3 install -U"
+alias pip3-update="pip3 freeze --local | grep -v '^\-e' | grep -v '@' | cut -d = -f 1 | xargs pip3 install -U --ignore-installed --break-system-packages"
 alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
 alias pwgen='openssl rand -base64 12'
 alias sshgen='ssh-keygen -t ed25519 -C "$(whoami)@$(hostname)-$(date -I)"'
@@ -337,6 +337,10 @@ function mac-updates {
   echo "Updating go modules ..."
   go install github.com/chainguard-dev/bincapz@latest
   GOPRIVATE=github.com/chainguard-dev/nami go install github.com/chainguard-dev/nami@latest
+
+  # Update Python packages
+  echo "Updating Python packages ..."
+  pip3 freeze --local | grep -v '^\-e' | grep -v '@' | cut -d = -f 1 | xargs pip3 install -U --ignore-installed --break-system-packages
 }
 
 # List images in a Helm chart
