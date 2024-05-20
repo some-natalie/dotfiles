@@ -20,7 +20,7 @@ import csv
 import json
 import subprocess
 
-registry = ""
+registry = "chainguard-private"
 
 # Get the list of images
 images = json.loads(
@@ -41,7 +41,7 @@ images = json.loads(
 # Make the CSV file
 with open("chainguard-images.csv", "w", newline="") as csvfile:
     writer = csv.writer(csvfile)
-    writer.writerow(["Image Name", "FIPS", "Tags"])
+    writer.writerow(["Image Name", "FIPS", "base/app", "Tags"])
     for image in images["items"]:
         tags = subprocess.check_output(
             [
@@ -52,12 +52,20 @@ with open("chainguard-images.csv", "w", newline="") as csvfile:
             ]
         )
         tags = tags.decode("utf-8").split("\n")
+        # if image bundles exists, get the list of bundles
+        # if the bundles list contains "base", it's a base image, otherwise "application"
+        if "bundles" in image:
+            base = "base" if "base" in image["bundles"] else "application"
+        else:
+            base = "application"
         writer.writerow(
             [
                 # name
                 image["name"],
                 # if name contains "-fips" then it is a FIPS image
                 "FIPS" if "-fips" in image["name"] else "non-fips",
+                # base/app
+                base,
                 # tags
                 tags,
             ]
