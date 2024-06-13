@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# This script generates a CSV file with the git history of the repository.
+# Run from the project's root directory.
+
 # set environment variables
 # COMMIT_URL="${{ github.server_url }}/${{ github.repository }}/commit/"
 COMMIT_URL=""
