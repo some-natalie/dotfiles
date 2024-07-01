@@ -5,9 +5,9 @@
 
 # set environment variables
 # COMMIT_URL="${{ github.server_url }}/${{ github.repository }}/commit/"
-COMMIT_URL=""
-input_gpg="true"
-input_diffs="true"
+COMMIT_URL=""  # makes a nice, clickable link to the commit in the CSV
+input_gpg="true"  # whether to include GPG signature information
+input_diffs="true"  # whether to create a diff file for each commit
 
 # git log
 if [ $input_gpg = "true" ]; then

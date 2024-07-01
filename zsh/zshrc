@@ -482,7 +482,7 @@ function cgr-find {
         return
     fi
     local privateorg="chainguard-private" # edit to your private registry
-    local publicorg="720909c9f5279097d847ad02a2f24ba8f59de36a"
+    local publicorg="chainguard"
     # private images
     echo "---- private images ----"
     chainctl img repos list --parent $privateorg -o json | jq -r '.items[].name' | fzf --filter="${1}" | sort
