@@ -341,6 +341,10 @@ function mac-updates {
   # Update Python packages
   echo "Updating Python packages ..."
   pip3 freeze --local | grep -v '^\-e' | grep -v '@' | cut -d = -f 1 | xargs pip3 install -U --ignore-installed --break-system-packages
+
+  # Update Google CLI stuff
+  echo "Updating Google CLI stuff ..."
+  gcloud components update
 }
 
 # List images in a Helm chart
