@@ -76,11 +76,12 @@ for result in final_results:
 
 # prep for table format
 table_data = []
-headers = ["Image"] + severity_levels
+headers = severity_levels + ["Total"]
 for item in final_results:
     row = [item["image"]]
-    for severity in headers[1:]:
+    for severity in headers[:-1]:
         row.append(item["severity_counts"].get(severity, 0))
+    row.append(sum(item["severity_counts"].values()))
     table_data.append(row)
 
 # print the table
