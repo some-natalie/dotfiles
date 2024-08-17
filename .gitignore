@@ -3,3 +3,4 @@ test-*.txt
 scripts/issue-titles.txt
 scripts/issue-body.txt
 *.csv
+/test.txt
