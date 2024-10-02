@@ -580,3 +580,22 @@ function apk-find {
   done
   docker run -it --rm $image /bin/sh -c "apk update && apk search $2"
 }
+
+function apk-count {
+  echo "unique packages, excluding dev and doc packages"
+  echo "packages available (x86_64):"
+  curl -sL https://packages.wolfi.dev/os/x86_64/APKINDEX.tar.gz |\
+    tar -Oxz APKINDEX | awk -F':' '$1 == "P" {printf "%s\n", $2}' |\
+    sort |\
+    uniq |\
+    grep -vE ".*-(dev|doc)" |\
+    wc -l
+  echo "packages available (aarch64):"
+  curl -sL https://packages.wolfi.dev/os/aarch64/APKINDEX.tar.gz |\
+    tar -Oxz APKINDEX |\
+    awk -F':' '$1 == "P" {printf "%s\n", $2}' |\
+    sort |\
+    uniq |\
+    grep -vE ".*-(dev|doc)" |\
+    wc -l
+}
