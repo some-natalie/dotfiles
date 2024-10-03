@@ -583,15 +583,31 @@ function apk-find {
 
 function apk-count {
   echo "unique packages, excluding dev and doc packages"
-  echo "packages available (x86_64):"
+  echo "wolfi packages available (x86_64):"
   curl -sL https://packages.wolfi.dev/os/x86_64/APKINDEX.tar.gz |\
     tar -Oxz APKINDEX | awk -F':' '$1 == "P" {printf "%s\n", $2}' |\
     sort |\
     uniq |\
     grep -vE ".*-(dev|doc)" |\
     wc -l
-  echo "packages available (aarch64):"
+  echo "extras packages available (x86_64):"
+  curl -sL https://packages.cgr.dev/extras/x86_64/APKINDEX.tar.gz |\
+    tar -Oxz APKINDEX |\
+    awk -F':' '$1 == "P" {printf "%s\n", $2}' |\
+    sort |\
+    uniq |\
+    grep -vE ".*-(dev|doc)" |\
+    wc -l
+  echo "wolfi packages available (aarch64):"
   curl -sL https://packages.wolfi.dev/os/aarch64/APKINDEX.tar.gz |\
+    tar -Oxz APKINDEX |\
+    awk -F':' '$1 == "P" {printf "%s\n", $2}' |\
+    sort |\
+    uniq |\
+    grep -vE ".*-(dev|doc)" |\
+    wc -l
+  echo "extras packages available (aarch64):"
+  curl -sL https://packages.cgr.dev/extras/aarch64/APKINDEX.tar.gz |\
     tar -Oxz APKINDEX |\
     awk -F':' '$1 == "P" {printf "%s\n", $2}' |\
     sort |\
