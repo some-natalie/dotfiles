@@ -19,9 +19,20 @@ function get_results() {
   jq '.runs[0].results' "$sarif_file"
 }
 
+function is_empty_sarif() {
+  local sarif_file="$1"
+  [ "$(jq '.runs[0].tool.driver.rules | length' "$sarif_file")" -eq 0 ] && \
+  [ "$(jq '.runs[0].results | length' "$sarif_file")" -eq 0 ]
+}
+
 function merge_sarif() {
   local file1="$1"
   local file2="$2"
+
+  if is_empty_sarif "$file1" && is_empty_sarif "$file2"; then
+    echo "Both SARIF files are empty. Skipping merge."
+    return
+  fi
 
   local j1
   j1=$(cat "$file1")
