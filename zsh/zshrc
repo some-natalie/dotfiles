@@ -85,6 +85,9 @@ source $ZSH/oh-my-zsh.sh
 # add go binary path
 path+=('/Users/natalie/go/bin')
 
+# add rust binary path
+path+=('/Users/natalie/.cargo/bin')
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -340,7 +343,7 @@ function mac-updates {
 
   # Update Python packages
   echo "Updating Python packages ..."
-  pip3 freeze --local | grep -v '^\-e' | grep -v '@' | cut -d = -f 1 | xargs pip3 install -U --ignore-installed --break-system-packages
+  pip3 freeze --local | grep -v '^\-e' | grep -v '@' | cut -d = -f 1 | xargs pip3 install -U --ignore-installed --break-system-packages --user
 
   # Update Google CLI stuff
   echo "Updating Google CLI stuff ..."
@@ -374,6 +377,42 @@ function chainctl-id {
   fi
   echo "Getting group ID for domain ${1} ..."
   chainctl iam organizations list -o json | jq '.items[] | select(.name == '\"${1}\"') | .id'
+}
+
+# Return YAML needed for Iron Bank hardening manifest SHA bumps
+function ib-sha-bump {
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: ib-sha-bump [chainguard image]"
+    echo "Return the YAML needed to bump the SHA in an Iron Bank hardening manifest."
+    return
+  fi
+  if [ "${1}" = "" ]; then
+    echo "Image name required."
+    echo "Example: ib-sha-bump cgr.dev/chainguard/node:latest"
+    return
+  fi
+  local image_name=${1}
+  local manifest_json=$(docker manifest inspect "${image_name}")
+  jq -n --argjson data "${manifest_json}" --arg tag "${image_name}" '
+    def create_resource(manifest):
+      if manifest.platform.architecture == "amd64" then
+        {
+          tag: $tag,
+          url: ("docker://" + $tag + "@" + manifest.digest)
+        }
+      elif manifest.platform.architecture == "arm64" then
+        {
+          tag: ($tag + "-arm64"),
+          url: ("docker://" + $tag + "@" + manifest.digest)
+        }
+      end;
+    {
+      resources: [
+        create_resource($data.manifests[0]),
+        create_resource($data.manifests[1])
+      ]
+    }
+  ' | yq eval -P
 }
 
 # Check website with htmlproofer
@@ -473,6 +512,22 @@ function docker-size {
   fi
   docker pull ${1} > /dev/null
   docker inspect -f "{{ .Size }}" ${1} | numfmt --to=si
+}
+
+function docker-arch {
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: docker-arch [image]"
+    echo "List the architectures for a multi-arch image."
+    return
+  fi
+  if [ "${1}" = "" ]; then
+    echo "Image name required."
+    return
+  fi
+  docker manifest inspect ${1} |\
+    jq -r '.manifests[].platform | select(.os != "unknown" and .architecture != "unknown") | "\(.os)-\(.architecture)"' |\
+    sort |\
+    uniq
 }
 
 function cgr-find {
@@ -615,3 +670,18 @@ function apk-count {
     grep -vE ".*-(dev|doc)" |\
     wc -l
 }
+
+function docker-layers {
+  if [ "${1}" = "-h" ]; then
+      echo "Usage: docker-layers [image]"
+      echo "Return the layers of a container image, with the oldest layers on top."
+    return
+  fi
+  if [ "${1}" = "" ]; then
+    echo "Image name required."
+    return
+  fi
+  docker image inspect ${1} |\
+    jq '.[].GraphDriver.Data.UpperDir + ":" + .[].GraphDriver.Data.LowerDir | split(":") | reverse'
+}
+
