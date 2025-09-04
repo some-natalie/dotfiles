@@ -1,0 +1,30 @@
+// Project tasks configuration. See https://zed.dev/docs/tasks for documentation.
+[
+  {
+    "label": "devcontainer start",
+    "command": "devcontainer up --workspace-folder ${ZED_WORKTREE_ROOT} && devcontainer run-user-commands --workspace-folder ${ZED_WORKTREE_ROOT} --dotfiles-repository https://github.com/some-natalie/dotfiles.git",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "reveal_target": "dock",
+    "shell": "system"
+  },
+  {
+    "label": "devcontainer update",
+    "command": "devcontainer run-user-commands --workspace-folder ${ZED_WORKTREE_ROOT} --dotfiles-repository https://github.com/some-natalie/dotfiles.git",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "reveal_target": "dock",
+    "shell": "system"
+  },
+  {
+    "label": "devcontainer shell",
+    "command": "devcontainer exec --workspace-folder ${ZED_WORKTREE_ROOT} -- /usr/bin/bash || /bin/bash || /bin/sh",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": true,
+    "reveal": "always",
+    "reveal_target": "dock",
+    "shell": "system"
+  }
+]

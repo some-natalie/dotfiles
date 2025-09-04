@@ -1,0 +1,87 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To sele all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette
+{
+  // copilot
+  "edit_predictions": {
+    "disabled_globs": [],
+    "mode": "eager",
+    "copilot": {
+      "proxy": null,
+      "proxy_no_verify": null,
+      "enterprise_uri": null
+    },
+    "enabled_in_text_threads": false
+  },
+  "show_edit_predictions": true,
+  "features": {
+    "edit_prediction_provider": "copilot"
+  },
+  "languages": {
+    "Markdown": {
+      "show_edit_predictions": false,
+      "remove_trailing_whitespace_on_save": true,
+      "show_whitespaces": "all",
+      "show_completions_on_input": false
+    }
+  },
+  "agent": {
+    "single_file_review": true,
+    "always_allow_tool_actions": false,
+    "preferred_completion_mode": "normal",
+    "default_model": {
+      "provider": "copilot_chat",
+      "model": "claude-sonnet-4"
+    },
+    "enabled": true
+  },
+  // fonts
+  "ui_font_size": 16,
+  "ui_font_family": "Inconsolata",
+  "buffer_font_size": 18,
+  "buffer_font_family": "Inconsolata",
+  // updates
+  "auto_update": true,
+  // theme
+  "theme": {
+    "mode": "system",
+    "light": "Catppuccin Latte",
+    "dark": "Catppuccin Macchiato"
+    // "light": "Rosé Pine Dawn",
+    // "dark": "Rosé Pine Moon"
+    // "light": "One Light",
+    // "dark": "One Dark"
+  },
+  "icon_theme": {
+    "dark": "Catppuccin Macchiato",
+    "light": "Catppuccin Latte",
+    "mode": "system"
+  },
+  // editor
+  "soft_wrap": "editor_width",
+  "tab_size": 2,
+  "remove_trailing_whitespace_on_save": true,
+  "show_whitespaces": "all",
+  "project_panel": {
+    "hide_gitignore": false,
+    "auto_reveal_entries": false
+  },
+  // terminal
+  "terminal": {
+    "detect_venv": {
+      "on": {
+        "directories": [".env", "env", ".venv", "venv"],
+        "activate_script": "default"
+      }
+    },
+    "working_directory": "always_home",
+    "font_size": 16,
+    "font_family": "Inconsolata",
+    "copy_on_select": true
+  }
+}
