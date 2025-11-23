@@ -31,7 +31,7 @@ function merge_sarif() {
 
   if is_empty_sarif "$file1" && is_empty_sarif "$file2"; then
     echo "Both SARIF files are empty. Skipping merge."
-    return
+    return 0
   fi
 
   local j1

@@ -8,9 +8,12 @@
 // command palette
 {
   // copilot
+  "calls": {
+    "mute_on_join": true
+  },
   "edit_predictions": {
     "disabled_globs": [],
-    "mode": "eager",
+    "mode": "subtle",
     "copilot": {
       "proxy": null,
       "proxy_no_verify": null,
@@ -28,6 +31,9 @@
       "remove_trailing_whitespace_on_save": true,
       "show_whitespaces": "all",
       "show_completions_on_input": false
+    },
+    "JSON": {
+      "formatter": "prettier"
     }
   },
   "agent": {
@@ -82,6 +88,7 @@
     "working_directory": "always_home",
     "font_size": 16,
     "font_family": "Inconsolata",
-    "copy_on_select": true
+    "copy_on_select": true,
+    "shell": "system"
   }
 }

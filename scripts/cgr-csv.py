@@ -20,7 +20,7 @@ import csv
 import json
 import subprocess
 
-registry = "chainguard-private"
+registry = "chainguard"
 
 # Get the list of images
 images = json.loads(
