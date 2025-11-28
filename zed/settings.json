@@ -8,6 +8,14 @@
 // command palette
 {
   // copilot
+  "title_bar": {
+    "show_menus": false
+  },
+  "git": {
+    "inline_blame": {
+      "padding": 7
+    }
+  },
   "calls": {
     "mute_on_join": true
   },
@@ -79,13 +87,20 @@
   },
   // terminal
   "terminal": {
+    "toolbar": {
+      "breadcrumbs": true
+    },
     "detect_venv": {
       "on": {
         "directories": [".env", "env", ".venv", "venv"],
         "activate_script": "default"
       }
     },
-    "working_directory": "always_home",
+    "working_directory": {
+      "always": {
+        "directory": "/Users/natalie"
+      }
+    },
     "font_size": 16,
     "font_family": "Inconsolata",
     "copy_on_select": true,
