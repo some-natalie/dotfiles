@@ -454,7 +454,7 @@ function run-website {
   docker run -it --rm \
     --volume="$PWD:/work" \
     -p 4000:4000 \
-    ghcr.io/some-natalie/jekyll-in-a-can:latest
+    ghcr.io/some-natalie/jekyll-in-a-can:latest-ruby3
 }
 
 # Nuke it from orbit w/ git
