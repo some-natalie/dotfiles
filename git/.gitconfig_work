@@ -4,8 +4,8 @@
 	safecrlf = true
 [user]
 	name = Natalie Somersall
-    email = natalie.somersall@chainguard.dev
-    signingkey = /Users/natalie/.ssh/github-signing.pub
+    email = natalie.somersall@xbow.com
+    signingkey = /Users/natalie.somersall/.ssh/github_signing.pub
 [push]
 	default = simple
 	autoSetupRemote = true
@@ -46,14 +46,10 @@
 	test = "!a() {\nlocal _scope _attention _message\nwhile [ $# -ne 0 ]; do\ncase $1 in\n  -s | --scope )\n    if [ -z $2 ]; then\n      echo \"Missing scope!\"\n      return 1\n    fi\n    _scope=\"$2\"\n    shift 2\n    ;;\n  -a | --attention )\n    _attention=\"!\"\n    shift 1\n    ;;\n  * )\n    _message=\"${_message} $1\"\n    shift 1\n    ;;\nesac\ndone\ngit commit -m \"test${_scope:+(${_scope})}${_attention}:${_message}\"\n}; a"
 	wip = "!a() {\nlocal _scope _attention _message\nwhile [ $# -ne 0 ]; do\ncase $1 in\n  -s | --scope )\n    if [ -z $2 ]; then\n      echo \"Missing scope!\"\n      return 1\n    fi\n    _scope=\"$2\"\n    shift 2\n    ;;\n  -a | --attention )\n    _attention=\"!\"\n    shift 1\n    ;;\n  * )\n    _message=\"${_message} $1\"\n    shift 1\n    ;;\nesac\ndone\ngit commit -m \"wip${_scope:+(${_scope})}${_attention}:${_message}\"\n}; a"
 [gpg]
-	format = x509
+	format = ssh
 [commit]
 	gpgsign = true
 [tag]
 	gpgsign = true
-[gpg "x509"]
-	program = gitsign
-[gitsign]
-	connectorID = https://accounts.google.com
-[oh-my-zsh]
-	git-commit-alias = 803e1a784cd520f101d126b47deea3297e6a82fc
+[credential]
+	helper = osxkeychain

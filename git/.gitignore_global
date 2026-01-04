@@ -47,3 +47,13 @@ passwords.txt
 */old_keys/*
 *.key
 *.ppk
+
+# Other stuff #
+###############
+test-*.txt
+**/token.txt
+scripts/issue-titles.txt
+scripts/issue-body.txt
+*.csv
+/test.txt
+.ropeproject
