@@ -51,3 +51,5 @@
 	gpgsign = true
 [tag]
 	gpgsign = true
+[oh-my-zsh]
+	git-commit-alias = a79b37b95461ea2be32578957473375954ab31ff
