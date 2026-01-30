@@ -9,15 +9,15 @@
 {
   // copilot
   "title_bar": {
-    "show_menus": false
+    "show_menus": false,
   },
   "git": {
     "inline_blame": {
-      "padding": 7
-    }
+      "padding": 7,
+    },
   },
   "calls": {
-    "mute_on_join": true
+    "mute_on_join": true,
   },
   "edit_predictions": {
     "disabled_globs": [],
@@ -25,34 +25,33 @@
     "copilot": {
       "proxy": null,
       "proxy_no_verify": null,
-      "enterprise_uri": null
+      "enterprise_uri": null,
     },
-    "enabled_in_text_threads": false
+    "enabled_in_text_threads": false,
   },
   "show_edit_predictions": true,
   "features": {
-    "edit_prediction_provider": "copilot"
+    "edit_prediction_provider": "copilot",
   },
   "languages": {
     "Markdown": {
       "show_edit_predictions": false,
       "remove_trailing_whitespace_on_save": true,
       "show_whitespaces": "all",
-      "show_completions_on_input": false
+      "show_completions_on_input": false,
     },
     "JSON": {
-      "formatter": "prettier"
-    }
+      "formatter": "prettier",
+    },
   },
   "agent": {
     "single_file_review": true,
     "always_allow_tool_actions": false,
-    "preferred_completion_mode": "normal",
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4"
+      "model": "claude-sonnet-4.5",
     },
-    "enabled": true
+    "enabled": true,
   },
   // fonts
   "ui_font_size": 16,
@@ -65,7 +64,7 @@
   "theme": {
     "mode": "system",
     "light": "Catppuccin Latte",
-    "dark": "Catppuccin Macchiato"
+    "dark": "Catppuccin Macchiato",
     // "light": "Rosé Pine Dawn",
     // "dark": "Rosé Pine Moon"
     // "light": "One Light",
@@ -74,7 +73,7 @@
   "icon_theme": {
     "dark": "Catppuccin Macchiato",
     "light": "Catppuccin Latte",
-    "mode": "system"
+    "mode": "system",
   },
   // editor
   "soft_wrap": "editor_width",
@@ -83,27 +82,27 @@
   "show_whitespaces": "all",
   "project_panel": {
     "hide_gitignore": false,
-    "auto_reveal_entries": false
+    "auto_reveal_entries": false,
   },
   // terminal
   "terminal": {
     "toolbar": {
-      "breadcrumbs": true
+      "breadcrumbs": true,
     },
     "detect_venv": {
       "on": {
         "directories": [".env", "env", ".venv", "venv"],
-        "activate_script": "default"
-      }
+        "activate_script": "default",
+      },
     },
     "working_directory": {
       "always": {
-        "directory": "/Users/natalie"
-      }
+        "directory": "/Users/natalie.somersall",
+      },
     },
     "font_size": 16,
     "font_family": "Inconsolata",
     "copy_on_select": true,
-    "shell": "system"
-  }
+    "shell": "system",
+  },
 }
