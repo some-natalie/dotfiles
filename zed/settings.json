@@ -45,6 +45,7 @@
     },
   },
   "agent": {
+    "default_profile": "ask",
     "single_file_review": true,
     "always_allow_tool_actions": false,
     "default_model": {
