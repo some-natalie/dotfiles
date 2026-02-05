@@ -20,9 +20,11 @@
     "mute_on_join": true,
   },
   "edit_predictions": {
+    "provider": "copilot",
     "disabled_globs": [],
     "mode": "subtle",
     "copilot": {
+      "enable_next_edit_suggestions": true,
       "proxy": null,
       "proxy_no_verify": null,
       "enterprise_uri": null,
@@ -30,9 +32,6 @@
     "enabled_in_text_threads": false,
   },
   "show_edit_predictions": true,
-  "features": {
-    "edit_prediction_provider": "copilot",
-  },
   "languages": {
     "Markdown": {
       "show_edit_predictions": false,
