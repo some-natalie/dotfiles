@@ -8,6 +8,11 @@
 // command palette
 {
   // copilot
+  "agent_servers": {
+    "github-copilot": {
+      "type": "registry",
+    },
+  },
   "title_bar": {
     "show_menus": false,
   },
@@ -48,7 +53,7 @@
     "single_file_review": true,
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-sonnet-4.5",
+      "model": "claude-opus-4.5",
     },
     "enabled": true,
   },
@@ -88,12 +93,13 @@
     "toolbar": {
       "breadcrumbs": true,
     },
-    "detect_venv": {
-      "on": {
-        "directories": [".env", "env", ".venv", "venv"],
-        "activate_script": "default",
-      },
-    },
+    "detect_venv": "off",
+    // "detect_venv": {
+    //   "on": {
+    //     "directories": [" .env", "env", ".venv", "venv"],
+    //     "activate_script": "default",
+    //   },
+    // },
     "working_directory": {
       "always": {
         "directory": "/Users/natalie.somersall",
