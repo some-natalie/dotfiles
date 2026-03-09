@@ -9,6 +9,9 @@
 {
   // copilot
   "agent_servers": {
+    "claude-acp": {
+      "type": "registry",
+    },
     "github-copilot": {
       "type": "registry",
     },
