@@ -471,6 +471,7 @@ function run-zola {
     --workdir /app \
     ghcr.io/some-natalie/zola-in-a-can:latest serve \
     --interface 0.0.0.0
+}
 
 # Nuke it from orbit w/ git
 function git-nah () {
