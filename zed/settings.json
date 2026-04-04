@@ -8,6 +8,9 @@
 // command palette
 {
   // copilot
+  "git_panel": {
+    "tree_view": true,
+  },
   "agent_servers": {
     "claude-acp": {
       "type": "registry",
@@ -37,7 +40,6 @@
       "proxy_no_verify": null,
       "enterprise_uri": null,
     },
-    "enabled_in_text_threads": false,
   },
   "show_edit_predictions": true,
   "languages": {
