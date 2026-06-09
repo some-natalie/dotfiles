@@ -4,8 +4,8 @@
 	safecrlf = true
 [user]
 	name = Natalie Somersall
-    email = somersall_natalie@bah.com
-    signingkey = /Users/nataliesomersall/.ssh/github_signing.pub
+	email = somersall_natalie@bah.com
+	signingkey = /Users/nataliesomersall/.ssh/github_signing.pub
 [push]
 	default = simple
 	autoSetupRemote = true

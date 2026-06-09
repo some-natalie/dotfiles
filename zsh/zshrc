@@ -5,6 +5,9 @@ export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:/opt/homebrew/bin:/opt/hom
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+# Zscaler stuff
+export NODE_USE_SYSTEM_CA=1
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -156,7 +159,7 @@ setup_gitsign () {
 setup_gitssh () {
   git config --local user.name "Natalie Somersall"
   git config --local user.email "natalie.somersall@gmail.com"
-  git config --local user.signingKey = /Users/natalie/.ssh/github-signing.pub
+  git config --local user.signingKey = /Users/nataliesomersall/.ssh/github_signing.pub
   git config --local commit.gpgsign true
   git config --local tag.gpgsign true
   git config --local gpg.x509.program ssh
