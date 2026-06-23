@@ -8,22 +8,46 @@
 // command palette
 {
   // copilot
+  "indent_guides": {
+    "background_coloring": "indent_aware",
+  },
   "outline_panel": {
+    "default_width": 300.0,
     "dock": "right",
   },
   "collaboration_panel": {
+    "default_width": 300.0,
+    "button": false,
     "dock": "right",
   },
   "git_panel": {
+    "default_width": 300.0,
     "dock": "right",
     "tree_view": true,
   },
   "agent_servers": {
+    "github-copilot-cli": {
+      "default_config_options": {
+        "allow_all": "off",
+      },
+      "type": "registry",
+    },
     "claude-acp": {
       "favorite_config_option_values": {
         "mode": ["plan"],
       },
       "type": "registry",
+      "env": {
+        "CLAUDE_CODE_USE_BEDROCK": "1",
+        "AWS_PROFILE": "",
+        "AWS_REGION": "",
+        "AWS_ENDPOINT_URL_BEDROCK_RUNTIME": "",
+        "AWS_ENDPOINT_URL_BEDROCK": "",
+        "ANTHROPIC_BEDROCK_BASE_URL": "",
+        "ANTHROPIC_DEFAULT_OPUS_MODEL": "",
+        "ANTHROPIC_DEFAULT_SONNET_MODEL": "",
+        "ANTHROPIC_DEFAULT_HAIKU_MODEL": "",
+      },
     },
     "github-copilot": {
       "type": "registry",
@@ -101,6 +125,7 @@
   "remove_trailing_whitespace_on_save": true,
   "show_whitespaces": "all",
   "project_panel": {
+    "default_width": 300.0,
     "dock": "right",
     "hide_gitignore": false,
     "auto_reveal_entries": false,

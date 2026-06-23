@@ -57,3 +57,8 @@ scripts/issue-body.txt
 *.csv
 /test.txt
 .ropeproject
+*.sarif
+
+# Claude stuff #
+################
+**/.claude/settings.local.json

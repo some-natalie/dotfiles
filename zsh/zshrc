@@ -1,12 +1,12 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/opt/ruby/bin:$PATH
 
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 # Zscaler stuff
 export NODE_USE_SYSTEM_CA=1
+export NODE_EXTRA_CA_CERTS="$HOME/Code/dotfiles-work/zscaler/ZscalerRootCertificate-2048-SHA256.crt"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -75,12 +75,12 @@ ZSH_THEME="muse"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git
-    git-commit
-    gh
-    history
-    kubectl
-    nmap
+  git
+  git-commit
+  gh
+  history
+  kubectl
+  nmap
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -119,6 +119,7 @@ path+=('/Users/natalie/.cargo/bin')
 # General
 alias c='clear'
 alias cgf='cgr-find'
+alias claude-yolo="claude --dangerously-skip-permissions"
 alias csrgen='openssl req -out CSR.csr -new -newkey rsa:4096 -nodes -keyout privatekey.key'
 alias df='df -h -x tmpfs -x devtmpfs'
 alias dft='df -Tha --total'
@@ -139,24 +140,32 @@ alias wget='wget -c'
 alias youtube='youtube-dl --newline'
 alias zz='sudo !!'
 
+# Claude stuff
+claude-local() {
+  ANTHROPIC_BASE_URL=http://localhost:1234 \
+    ANTHROPIC_AUTH_TOKEN=lmstudio \
+    CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
+    claude --model google/gemma-4-26b-a4b "$@"
+}
+
 # Force-remove all local branches that don't exist on the remote
 function git-cleanup {
   git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D
 }
 
 # Config git repo for work
-setup_gitsign () {
+setup_gitsign() {
   git config --local user.name "Natalie Somersall"
   git config --local user.email "some-natalie@chainguard.dev"
-	git config --local commit.gpgsign true
-	git config --local tag.gpgsign true
-	git config --local gpg.x509.program gitsign
-	git config --local gpg.format x509
-	git config --local gitsign.connectorID https://accounts.google.com
+  git config --local commit.gpgsign true
+  git config --local tag.gpgsign true
+  git config --local gpg.x509.program gitsign
+  git config --local gpg.format x509
+  git config --local gitsign.connectorID https://accounts.google.com
 }
 
 # Config git repo for personal
-setup_gitssh () {
+setup_gitssh() {
   git config --local user.name "Natalie Somersall"
   git config --local user.email "natalie.somersall@gmail.com"
   git config --local user.signingKey = /Users/nataliesomersall/.ssh/github_signing.pub
@@ -167,8 +176,8 @@ setup_gitssh () {
 }
 
 # Because.
-fliptable(){ echo "（╯°□°）╯ ┻━┻"; }
-shrug(){ echo " ¯\_(ツ)_/¯ "; }
+fliptable() { echo "（╯°□°）╯ ┻━┻"; }
+shrug() { echo " ¯\_(ツ)_/¯ "; }
 
 # Aliases for GitHub Copilot CLI
 alias 'gh?'='gh copilot explain'
@@ -191,24 +200,24 @@ function extract() {
     echo "Extracts specified archive."
     return
   fi
-  if [ -f "$1" ] ; then
+  if [ -f "$1" ]; then
     case "$1" in
-      *.tar.bz2) tar xjf "$1" ;;
-      *.tar.gz) tar xzf "$1" ;;
-      *.tar.Z) tar xzf "$1" ;;
-      *.bz2) bunzip2 "$1" ;;
-      *.rar) unrar x "$1" ;;
-      *.gz) gunzip "$1" ;;
-      *.jar) unzip "$1" ;;
-      *.tar) tar xf "$1" ;;
-      *.tbz2) tar xjf "$1" ;;
-      *.tgz) tar xzf "$1" ;;
-      *.zip) unzip "$1" ;;
-      *.Z) uncompress "$1" ;;
-      *) echo "'$1' cannot be extracted." ;;
+    *.tar.bz2) tar xjf "$1" ;;
+    *.tar.gz) tar xzf "$1" ;;
+    *.tar.Z) tar xzf "$1" ;;
+    *.bz2) bunzip2 "$1" ;;
+    *.rar) unrar x "$1" ;;
+    *.gz) gunzip "$1" ;;
+    *.jar) unzip "$1" ;;
+    *.tar) tar xf "$1" ;;
+    *.tbz2) tar xjf "$1" ;;
+    *.tgz) tar xzf "$1" ;;
+    *.zip) unzip "$1" ;;
+    *.Z) uncompress "$1" ;;
+    *) echo "'$1' cannot be extracted." ;;
     esac
-    else
-      echo "'$1' is not a file."
+  else
+    echo "'$1' is not a file."
   fi
 }
 
@@ -265,7 +274,7 @@ function openfiles {
     echo -e "Usage: openfiles [r|w|m|R|W] regex\n    -r    opened for reading or read/write\n    -w    opened for writing or read/write\n    -m    accessed from memory (includes running command)\n    -R    opened for reading only\n    -W    opened for writing only"
     return
   fi
-  if [ "$#" = "0" ]; then
+  if [ "$" = "0" ]; then
     echo "Process signature/regex required."
     return
   fi
@@ -298,7 +307,7 @@ function openfiles {
     echo "No processes found matching '${@}'."
     return
   fi
-  OPENFILES=$(lsof -PXn -p "${PIDS}" | egrep "${MODE}[A-Za-z]* +REG" | awk '{print $9}' | egrep -v "^\[" | sort | uniq);
+  OPENFILES=$(lsof -PXn -p "${PIDS}" | egrep "${MODE}[A-Za-z]* +REG" | awk '{print $9}' | egrep -v "^\[" | sort | uniq)
   if [ "${OPENFILES}" = "" ]; then
     echo "No files opened ${ACTION}."
   else
@@ -433,11 +442,11 @@ function check-website {
     echo "Check website with htmlproofer."
     return
   fi
-  rm -rf Gemfile.lock _site .jekyll-cache && \
-  docker run -it --rm \
-    --volume="$PWD:/work" \
-    ghcr.io/some-natalie/jekyll-in-a-can:latest-ruby3 /bin/sh -c \
-    "bundle exec jekyll b -d '_site' && \
+  rm -rf Gemfile.lock _site .jekyll-cache &&
+    docker run -it --rm \
+      --volume="$PWD:/work" \
+      ghcr.io/some-natalie/jekyll-in-a-can:latest-ruby3 /bin/sh -c \
+      "bundle exec jekyll b -d '_site' && \
       bundle exec htmlproofer _site \
       --disable-external \
       --no-enforce_https"
@@ -477,7 +486,7 @@ function run-zola {
 }
 
 # Nuke it from orbit w/ git
-function git-nah () {
+function git-nah() {
   git reset --hard
   git clean -df
   if [ -d ".git/rebase-apply" ] || [ -d ".git/rebase-merge" ]; then
@@ -486,7 +495,7 @@ function git-nah () {
 }
 
 # Grype summation
-function grype-summary () {
+function grype-summary() {
   if [ "${1}" = "-h" ]; then
     echo "Usage: grype-summary [path]"
     echo "Summarize vulnerabilities found by Grype."
@@ -497,16 +506,16 @@ function grype-summary () {
     return
   fi
   grype ${1} -o json --file grype.json -q
-  echo "Total = $(cat grype.json | jq  '.matches[].vulnerability.severity' | uniq -c | awk '{sum += $1} END {print sum}')"
+  echo "Total = $(cat grype.json | jq '.matches[].vulnerability.severity' | uniq -c | awk '{sum += $1} END {print sum}')"
   echo ""
   echo "| Count | Severity    |"
   echo "|-------|-------------|"
-  printf "| %-5s | %-11s |\n" $(cat grype.json | jq  '.matches[].vulnerability.severity' | grep -c 'Critical') "critical"
-  printf "| %-5s | %-11s |\n" $(cat grype.json | jq  '.matches[].vulnerability.severity' | grep -c 'High') "high"
-  printf "| %-5s | %-11s |\n" $(cat grype.json | jq  '.matches[].vulnerability.severity' | grep -c 'Medium') "medium"
-  printf "| %-5s | %-11s |\n" $(cat grype.json | jq  '.matches[].vulnerability.severity' | grep -c 'Low') "low"
-  printf "| %-5s | %-11s |\n" $(cat grype.json | jq  '.matches[].vulnerability.severity' | grep -c 'Negligible') "negligible"
-  printf "| %-5s | %-11s |\n" $(cat grype.json | jq  '.matches[].vulnerability.severity' | grep -c 'Unknown') "unknown"
+  printf "| %-5s | %-11s |\n" $(cat grype.json | jq '.matches[].vulnerability.severity' | grep -c 'Critical') "critical"
+  printf "| %-5s | %-11s |\n" $(cat grype.json | jq '.matches[].vulnerability.severity' | grep -c 'High') "high"
+  printf "| %-5s | %-11s |\n" $(cat grype.json | jq '.matches[].vulnerability.severity' | grep -c 'Medium') "medium"
+  printf "| %-5s | %-11s |\n" $(cat grype.json | jq '.matches[].vulnerability.severity' | grep -c 'Low') "low"
+  printf "| %-5s | %-11s |\n" $(cat grype.json | jq '.matches[].vulnerability.severity' | grep -c 'Negligible') "negligible"
+  printf "| %-5s | %-11s |\n" $(cat grype.json | jq '.matches[].vulnerability.severity' | grep -c 'Unknown') "unknown"
   rm grype.json
 }
 
@@ -521,10 +530,10 @@ function k-ls-images {
     echo " ... any `uniq` arguments work here ... "
   fi
   kubectl get pods --all-namespaces \
-    -o jsonpath="{.items[*].spec['initContainers', 'containers'][*].image}" |\
-  tr -s '[[:space:]]' '\n' |\
-  sort |\
-  uniq ${1}
+    -o jsonpath="{.items[*].spec['initContainers', 'containers'][*].image}" |
+    tr -s '[[:space:]]' '\n' |
+    sort |
+    uniq ${1}
 }
 
 function docker-size {
@@ -551,35 +560,34 @@ function docker-arch {
     echo "Image name required."
     return
   fi
-  docker manifest inspect ${1} |\
-    jq -r '.manifests[].platform | select(.os != "unknown" and .architecture != "unknown") | "\(.os)-\(.architecture)"' |\
-    sort |\
+  docker manifest inspect ${1} |
+    jq -r '.manifests[].platform | select(.os != "unknown" and .architecture != "unknown") | "\(.os)-\(.architecture)"' |
+    sort |
     uniq
 }
 
 function cgr-find {
-    if [ "${1}" = "-h" ]; then
-        echo "Usage: chainguard-search [image]"
-        echo "Search for an image by name with fzf."
-        return
-    fi
-    if [ "${1}" = "" ]; then
-        echo "Image name required."
-        return
-    fi
-    if [ "${1}" = "-p" ]; then
-        echo "Searching for public images ..."
-        local org="chainguard-private"
-        # public
-        echo "---- public images ----"
-        chainctl img repos list --public -o json | jq -r '.items[].name' | fzf --filter="${1}" | sort
-    else
-        echo "Searching for private images ..."
-        local privateorg="chainguard-private" # edit to your private registry
-        # private images
-        echo "---- private images ----"
-        chainctl img repos list --parent $privateorg -o json | jq -r '.items[].name' | fzf --filter="${1}" | sort
-    fi
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: chainguard-search [image]"
+    echo "Search for an image by name with fzf."
+    return
+  fi
+  if [ "${1}" = "" ]; then
+    echo "Image name required."
+    return
+  fi
+  local ORG="bah-enterprise" # edit to your private registry
+  if [ "${1}" = "-p" ]; then
+    echo "Searching for public images ..."
+    # public
+    echo "---- public images ----"
+    chainctl img repos list --public -o json | jq -r '.items[].name' | fzf --filter="${1}" | sort
+  else
+    echo "Searching for private images ..."
+    # private images
+    echo "---- private images ----"
+    chainctl img repos list --parent $ORG -o json | jq -r '.items[].name' | fzf --filter="${1}" | sort
+  fi
 }
 
 function cgr-list {
@@ -597,26 +605,27 @@ function cgr-list {
   # split filename and extension with awk, keep the filename
   local filename=$(echo $1 | awk -F. '{print $1}')
   # set org name and export the list
-  local privateorg="chainguard-private" # edit to your private registry
-  chainctl img repos list --parent $privateorg -o json |\
-    jq -r '.items[].name' |\
-    sort > $filename-$day.txt
+  local privateorg="bah-enterprise" # edit to your private registry
+  chainctl img repos list --parent $privateorg -o json |
+    jq -r '.items[].name' |
+    sort >$filename-$day.txt
   # get length of images
   local count=$(wc -l $filename-$day.txt | awk '{print $1}')
   echo "List of $count images in $privateorg written to $filename-$day.txt 🎉"
 }
 
 function img-tags {
-    if [ "${1}" = "-h" ]; then
-        echo "Usage: img-tags registry.url/reponame/imagename"
-        echo "List tags for an OCI-compliant image, omitting digests, using crane."
-        return
-    fi
-    if [ "${1}" = "" ]; then
-        echo "Image name required."
-        return
-    fi
-    crane ls cgr.dev/chainguard-private/${1} --omit-digest-tags
+  if [ "${1}" = "-h" ]; then
+    echo "Usage: img-tags registry.url/reponame/imagename"
+    echo "List tags for an OCI-compliant image, omitting digests, using crane."
+    return
+  fi
+  if [ "${1}" = "" ]; then
+    echo "Image name required."
+    return
+  fi
+  local ORG="bah-enterprise"
+  crane ls cgr.dev/$ORG/${1} --omit-digest-tags
 }
 
 function docker-cleanup {
@@ -634,30 +643,37 @@ function apk-find {
     echo "hint ... use -h for help"
     return
   fi
+  local ORG="bah-enterprise"
   while getopts "hc:f:w:a:" opt; do
     case ${opt} in
-      h)
-        echo "Usage: apk-find [options] [package]"
-        echo "Search for an Alpine/Wolfi/Chainguard package by name within a container."
-        echo "Options:"
-        echo "  -c  Search for packages in the Chainguard-Base repos."
-        echo "  -f  Search for packages in the Chainguard-Base-FIPS repos."
-        echo "  -w  Search for packages in the Wolfi repos."
-        echo "  -a  Search for packages in the Alpine repos."
-        echo "  -h  Display this help message."
-        return 0 ;;
-      c)
-        image=cgr.dev/chainguard-private/chainguard-base:latest ;;
-      f)
-        image=cgr.dev/chainguard-private/chainguard-base-fips:latest ;;
-      w)
-        image=cgr.dev/chainguard/wolfi-base:latest ;;
-      a)
-        image=alpine:latest ;;
-      \?)
-        echo "Invalid option: $OPTARG" 1>&2
-        echo "hint ... use -h for help"
-        return 1 ;;
+    h)
+      echo "Usage: apk-find [options] [package]"
+      echo "Search for an Alpine/Wolfi/Chainguard package by name within a container."
+      echo "Options:"
+      echo "  -c  Search for packages in the Chainguard-Base repos."
+      echo "  -f  Search for packages in the Chainguard-Base-FIPS repos."
+      echo "  -w  Search for packages in the Wolfi repos."
+      echo "  -a  Search for packages in the Alpine repos."
+      echo "  -h  Display this help message."
+      return 0
+      ;;
+    c)
+      image=cgr.dev/$ORG/chainguard-base:latest
+      ;;
+    f)
+      image=cgr.dev/$ORG/chainguard-base-fips:latest
+      ;;
+    w)
+      image=cgr.dev/chainguard/wolfi-base:latest
+      ;;
+    a)
+      image=alpine:latest
+      ;;
+    \?)
+      echo "Invalid option: $OPTARG" 1>&2
+      echo "hint ... use -h for help"
+      return 1
+      ;;
     esac
   done
   docker run -it --rm $image /bin/sh -c "apk update && apk search $2"
@@ -666,48 +682,52 @@ function apk-find {
 function apk-count {
   echo "unique packages, excluding dev and doc packages"
   echo "wolfi packages available (x86_64):"
-  curl -sL https://packages.wolfi.dev/os/x86_64/APKINDEX.tar.gz |\
-    tar -Oxz APKINDEX | awk -F':' '$1 == "P" {printf "%s\n", $2}' |\
-    sort |\
-    uniq |\
-    grep -vE ".*-(dev|doc)" |\
+  curl -sL https://packages.wolfi.dev/os/x86_64/APKINDEX.tar.gz |
+    tar -Oxz APKINDEX | awk -F':' '$1 == "P" {printf "%s\n", $2}' |
+    sort |
+    uniq |
+    grep -vE ".*-(dev|doc)" |
     wc -l
   echo "extras packages available (x86_64):"
-  curl -sL https://packages.cgr.dev/extras/x86_64/APKINDEX.tar.gz |\
-    tar -Oxz APKINDEX |\
-    awk -F':' '$1 == "P" {printf "%s\n", $2}' |\
-    sort |\
-    uniq |\
-    grep -vE ".*-(dev|doc)" |\
+  curl -sL https://packages.cgr.dev/extras/x86_64/APKINDEX.tar.gz |
+    tar -Oxz APKINDEX |
+    awk -F':' '$1 == "P" {printf "%s\n", $2}' |
+    sort |
+    uniq |
+    grep -vE ".*-(dev|doc)" |
     wc -l
   echo "wolfi packages available (aarch64):"
-  curl -sL https://packages.wolfi.dev/os/aarch64/APKINDEX.tar.gz |\
-    tar -Oxz APKINDEX |\
-    awk -F':' '$1 == "P" {printf "%s\n", $2}' |\
-    sort |\
-    uniq |\
-    grep -vE ".*-(dev|doc)" |\
+  curl -sL https://packages.wolfi.dev/os/aarch64/APKINDEX.tar.gz |
+    tar -Oxz APKINDEX |
+    awk -F':' '$1 == "P" {printf "%s\n", $2}' |
+    sort |
+    uniq |
+    grep -vE ".*-(dev|doc)" |
     wc -l
   echo "extras packages available (aarch64):"
-  curl -sL https://packages.cgr.dev/extras/aarch64/APKINDEX.tar.gz |\
-    tar -Oxz APKINDEX |\
-    awk -F':' '$1 == "P" {printf "%s\n", $2}' |\
-    sort |\
-    uniq |\
-    grep -vE ".*-(dev|doc)" |\
+  curl -sL https://packages.cgr.dev/extras/aarch64/APKINDEX.tar.gz |
+    tar -Oxz APKINDEX |
+    awk -F':' '$1 == "P" {printf "%s\n", $2}' |
+    sort |
+    uniq |
+    grep -vE ".*-(dev|doc)" |
     wc -l
 }
 
 function docker-layers {
   if [ "${1}" = "-h" ]; then
-      echo "Usage: docker-layers [image]"
-      echo "Return the layers of a container image, with the oldest layers on top."
+    echo "Usage: docker-layers [image]"
+    echo "Return the layers of a container image, with the oldest layers on top."
     return
   fi
   if [ "${1}" = "" ]; then
     echo "Image name required."
     return
   fi
-  docker image inspect ${1} |\
+  docker image inspect ${1} |
     jq '.[].GraphDriver.Data.UpperDir + ":" + .[].GraphDriver.Data.LowerDir | split(":") | reverse'
 }
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/nataliesomersall/.lmstudio/bin"
+# End of LM Studio CLI section
