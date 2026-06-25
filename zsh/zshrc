@@ -494,6 +494,45 @@ function git-nah() {
   fi
 }
 
+# Clone every repo in an organization using the `gh` cli
+# Flags: --bare (mirror using bare clone), --depth <n> (fetch depth)
+function clone-org() {
+  local org bare="" depth=""
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -h | --help)
+      echo "Usage: clone-org [--bare] [--depth <n>] <org>"
+      echo ""
+      echo "Clone every repo in a GitHub organization."
+      echo ""
+      echo "Options:"
+      echo "  --bare          Mirror using bare clone"
+      echo "  --depth <n>     Create a shallow clone with fetch depth n"
+      echo "  -h, --help      Show this help message"
+      return 0
+      ;;
+    --bare)
+      bare="--bare"
+      shift
+      ;;
+    --depth)
+      depth="--depth=$2"
+      shift 2
+      ;;
+    *)
+      org="$1"
+      shift
+      ;;
+    esac
+  done
+  [[ -n "$org" ]] || {
+    echo "Usage: clone-org [--bare] [--depth <n>] <org>"
+    return 1
+  }
+  gh repo list "$org" --limit 1000 --json nameWithOwner --jq '.[].nameWithOwner' |
+    xargs -P 4 -I {} env NO_COLOR=1 gh repo clone {} -- --quiet ${bare:+"$bare"} ${depth:+"$depth"}
+}
+
 # Grype summation
 function grype-summary() {
   if [ "${1}" = "-h" ]; then
@@ -527,7 +566,7 @@ function k-ls-images {
   fi
   if [ "${1}" = "-c" ]; then
     echo "Returning count of pods running each image as well."
-    echo " ... any `uniq` arguments work here ... "
+    echo " ... any uniq arguments work here ... "
   fi
   kubectl get pods --all-namespaces \
     -o jsonpath="{.items[*].spec['initContainers', 'containers'][*].image}" |
@@ -546,7 +585,7 @@ function docker-size {
     echo "Image name required."
     return
   fi
-  docker pull ${1} > /dev/null
+  docker pull ${1} >/dev/null
   docker inspect -f "{{ .Size }}" ${1} | numfmt --to=si
 }
 
