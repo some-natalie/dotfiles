@@ -148,6 +148,38 @@ claude-local() {
     claude --model google/gemma-4-26b-a4b "$@"
 }
 
+function update-claude {
+  local claude_dir="${CLAUDE_DIR:-$HOME/.claude}"
+
+  echo "==> Refreshing marketplaces"
+  claude plugin marketplace update
+
+  echo "==> Updating installed plugins"
+  local plugins_json="$claude_dir/plugins/installed_plugins.json"
+  if [ -f "$plugins_json" ]; then
+    jq -r '.plugins | keys[]' "$plugins_json" | while read -r plugin; do
+      echo "  - $plugin"
+      claude plugin update "$plugin" || echo "    (skipped: $plugin)"
+    done
+  else
+    echo "  no installed_plugins.json, skipping"
+  fi
+
+  echo "==> Updating symlinked skills (git repos)"
+  local seen="" link target repo
+  for link in "$claude_dir"/skills/*; do
+    [ -L "$link" ] || continue
+    target="$(readlink "$link")"
+    repo="$(git -C "$target" rev-parse --show-toplevel 2>/dev/null)" || continue
+    case "$seen" in *"|$repo|"*) continue ;; esac
+    seen="$seen|$repo|"
+    echo "  - $repo"
+    git -C "$repo" pull --ff-only || echo "    (skipped: $repo)"
+  done
+
+  echo "==> Done. Restart Claude Code to apply plugin updates."
+}
+
 # Force-remove all local branches that don't exist on the remote
 function git-cleanup {
   git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D
@@ -344,26 +376,21 @@ function mac-updates {
   echo "Updating Nmap scripts ..."
   nmap --script-updatedb
 
-  # Chainver (if installed)
-  if command -v chainver >/dev/null 2>&1; then
-    echo "Updating Chainver ..."
-    ${HOME}/Code/dotfiles/scripts/update-chainver.sh
-  else
-    echo "Chainver not installed, skipping."
-  fi
-
   # Update go modules
-  echo "Updating go modules ..."
-  go install github.com/chainguard-dev/bincapz@latest
-  GOPRIVATE=github.com/chainguard-dev/nami go install github.com/chainguard-dev/nami@latest
+  # echo "Updating go modules ..."
+  # go install github.com/chainguard-dev/bincapz@latest
+  # GOPRIVATE=github.com/chainguard-dev/nami go install github.com/chainguard-dev/nami@latest
 
   # Update Python packages
-  echo "Updating Python packages ..."
-  pip3 freeze --local | grep -v '^\-e' | grep -v '@' | cut -d = -f 1 | xargs pip3 install -U --ignore-installed --break-system-packages --user
+  # echo "Updating Python packages ..."
+  # pip3 freeze --local | grep -v '^\-e' | grep -v '@' | cut -d = -f 1 | xargs pip3 install -U --ignore-installed --break-system-packages --user
 
   # Update Google CLI stuff
-  echo "Updating Google CLI stuff ..."
-  gcloud components update
+  # echo "Updating Google CLI stuff ..."
+  # gcloud components update
+
+  # Update Claude
+  update-claude
 
   # Oh my zsh
   echo "Updating Oh My Zsh ..."
