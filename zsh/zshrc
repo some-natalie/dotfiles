@@ -142,10 +142,10 @@ alias zz='sudo !!'
 
 # Claude stuff
 claude-local() {
-  ANTHROPIC_BASE_URL=http://localhost:1234 \
-    ANTHROPIC_AUTH_TOKEN=lmstudio \
+  ANTHROPIC_BASE_URL=http://localhost:11434 \
+    ANTHROPIC_AUTH_TOKEN=ollama \
     CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1 \
-    claude --model google/gemma-4-26b-a4b "$@"
+    claude --model laguna-xs-2.1:latest "$@"
 }
 
 function update-claude {
