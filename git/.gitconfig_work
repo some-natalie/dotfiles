@@ -52,6 +52,6 @@
 [tag]
 	gpgsign = true
 [oh-my-zsh]
-	git-commit-alias = 076d692dac8b6969039ec0c6c1b54462f8ba59e5
+	git-commit-alias = 6f39351feff2126608ea696ca1ab9ba6b13cb77f
 [gpg "ssh"]
 	allowedSignersFile = /Users/nataliesomersall/.ssh/allowed_signers
