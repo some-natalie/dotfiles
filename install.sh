@@ -18,6 +18,20 @@ setup-bash() {
   bash-it enable alias curl docker git
 }
 
+setup-k9s() {
+  echo "----- setup k9s -----"
+  if [[ "$(uname)" == "Darwin" ]]; then
+    mkdir -p "$HOME/Library/Application Support/k9s"
+    for f in config.yaml aliases.yaml skins; do
+      rm -rf "$HOME/Library/Application Support/k9s/$f"
+      ln -s "$HOME/Code/dotfiles/k9s/$f" "$HOME/Library/Application Support/k9s/$f"
+    done
+  else
+    mkdir -p ~/.config/k9s
+    mv ~/.dotfiles/k9s/config.yaml ~/.dotfiles/k9s/aliases.yaml ~/.dotfiles/k9s/skins ~/.config/k9s/
+  fi
+}
+
 setup-vim() {
   echo "----- setup vim -----"
   git clone --depth=1 https://github.com/amix/vimrc.git ~/.vim_runtime
@@ -26,6 +40,7 @@ setup-vim() {
 
 setup-files
 setup-bash
+setup-k9s
 setup-vim
 
 rm -rf ~/.dotfiles

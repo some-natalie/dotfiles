@@ -93,7 +93,7 @@
     "single_file_review": true,
     "default_model": {
       "provider": "copilot_chat",
-      "model": "claude-opus-4.5",
+      "model": "claude-opus-4.8",
     },
     "enabled": true,
   },
@@ -144,7 +144,7 @@
     // },
     "working_directory": {
       "always": {
-        "directory": "/Users/natalie.somersall",
+        "directory": "/Users/nataliesomersall",
       },
     },
     "font_size": 16,
