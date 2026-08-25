@@ -1,12 +1,15 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:/opt/homebrew/bin:/opt/homebrew/opt/ruby/bin:$PATH
 
+# Homebrew stuffs
+export HOMEBREW_CASK_OPTS="--appdir=$HOME/Applications"
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 # Zscaler stuff
 export NODE_USE_SYSTEM_CA=1
-export NODE_EXTRA_CA_CERTS="$HOME/Code/dotfiles-work/zscaler/ZscalerRootCertificate-2048-SHA256.crt"
+export NODE_EXTRA_CA_CERTS="/Users/nataliesomersall/Code/dotfiles-work/zscaler/ZscalerRootCertificate-2048-SHA256.crt"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
