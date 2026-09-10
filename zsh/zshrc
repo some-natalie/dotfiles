@@ -183,9 +183,16 @@ function update-claude {
   echo "==> Done. Restart Claude Code to apply plugin updates."
 }
 
-# Force-remove all local branches that don't exist on the remote
+# Force-remove all local branches and their worktrees that don't exist on the remote
 function git-cleanup {
-  git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -D
+  git fetch -p || return
+  git worktree prune
+  git branch -vv | awk '/: gone]/{sub(/^../, ""); print $1}' | while read -r branch; do
+    local wt=$(git worktree list --porcelain |
+      awk -v b="branch refs/heads/$branch" '/^worktree /{p=substr($0,10)} $0==b{print p}')
+    [[ -n $wt ]] && { git worktree remove "$wt" || continue; }
+    git branch -D "$branch"
+  done
 }
 
 # Config git repo for work
