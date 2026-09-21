@@ -4,7 +4,7 @@
 	safecrlf = true
 [user]
 	name = Natalie Somersall
-	email = somersall_natalie@bah.com
+	email = Somersall_Natalie@bah.com
 	signingkey = /Users/nataliesomersall/.ssh/github_signing.pub
 [push]
 	default = simple
@@ -52,6 +52,10 @@
 [tag]
 	gpgsign = true
 [oh-my-zsh]
-	git-commit-alias = cd320b5506998f32284d37799592cb2ba43a3188
+	git-commit-alias = 6421f8e104e4e87f2373362cbf61e46a918612a7
 [gpg "ssh"]
 	allowedSignersFile = /Users/nataliesomersall/.ssh/allowed_signers
+[includeIf "hasconfig:remote.*.url:*github.boozallencsn.com*/**"]
+	path = /Users/nataliesomersall/.gitconfig-smime
+[includeIf "hasconfig:remote.*.url:https://github.boozallencsn.com/**"]
+	path = /Users/nataliesomersall/.gitconfig-smime
