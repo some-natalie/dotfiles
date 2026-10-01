@@ -52,7 +52,7 @@
 [tag]
 	gpgsign = true
 [oh-my-zsh]
-	git-commit-alias = 6421f8e104e4e87f2373362cbf61e46a918612a7
+	git-commit-alias = 4d4cfc287e9d887b81242c0e431b5f49f9cec5c1
 [gpg "ssh"]
 	allowedSignersFile = /Users/nataliesomersall/.ssh/allowed_signers
 [includeIf "hasconfig:remote.*.url:*github.boozallencsn.com*/**"]
