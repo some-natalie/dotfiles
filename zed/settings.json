@@ -72,7 +72,6 @@
       "enable_next_edit_suggestions": true,
       "proxy": null,
       "proxy_no_verify": null,
-      "enterprise_uri": null,
     },
   },
   "show_edit_predictions": true,
